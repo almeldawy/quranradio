@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
+    <!-- MÉTADONNÉES : Les informations invisibles pour le navigateur -->
     <meta charset="UTF-8">
+    <!-- Adaptation automatique à la taille de l'écran (mobile/tablette) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Icône pour l'installation sur iPhone/iPad -->
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhwzbQZ3iHzbzjW6-akYWlYamGn1hbWq2_hidaZDTD3I4nIUjhNl4ah9F1T3akY1ZTdSD80KXCKSKCHnOsWHMgFl-VSezptKUZdx5FpVnqnqkduHz5sT97uSv8xCDoBUSMDHF0Xv2WddWVBd3WRSG_le65hCSwD_8TKntKRT7noD6vugTwaU3LuXC_msRTZ/s16000/3dK88qLo_400x400.jpg">
     
     <title>Radio du Saint Coran - Arabie Saoudite</title>
     
+    <!-- CHARGEMENT DES POLICES : Amiri pour l'arabe, Inter pour le reste -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Bibliothèque d'icônes (Font Awesome) pour les boutons Play/Volume -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Manifeste PWA généré à la volée pour faciliter l'installation -->
+    <!-- Lien pour le mode "Application Installable" (PWA) -->
     <link rel="manifest" id="pwa-manifest">
 
     <style>
+        /* VARIABLES CSS : On définit nos couleurs ici pour les réutiliser facilement */
         :root {
-            --primary: #c5a059;
+            --primary: #c5a059;       /* Couleur dorée */
             --primary-dark: #a38445;
-            --bg-dark: #0f172a;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg-dark: #0f172a;       /* Bleu très foncé */
+            --glass: rgba(255, 255, 255, 0.05); /* Effet de transparence "verre" */
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-main: #f8fafc;
-            --text-dim: #94a3b8;
+            --text-dim: #94a3b8;      /* Texte grisé */
         }
 
+        /* RESET : On remet à zéro les marges par défaut des navigateurs */
         * {
             margin: 0;
             padding: 0;
@@ -34,6 +42,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* STYLE DU CORPS : Arrière-plan avec image et dégradés */
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-dark);
@@ -53,6 +62,7 @@
             overflow-x: hidden;
         }
 
+        /* Filtre sombre par-dessus l'image de fond pour la lisibilité */
         body::after {
             content: "";
             position: fixed;
@@ -61,27 +71,30 @@
             z-index: 1;
         }
 
+        /* CARTE PRINCIPALE : L'élément central transparent */
         .main-card {
             position: relative;
             z-index: 10;
             width: 100%;
             max-width: 420px;
             background: var(--glass);
-            backdrop-filter: blur(25px);
+            backdrop-filter: blur(25px); /* Effet de flou derrière la carte */
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
             border-radius: 35px;
             padding: 35px 25px;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1.2s ease-out;
+            animation: fadeIn 1.2s ease-out; /* Animation d'apparition */
         }
 
+        /* Animation d'entrée : glisse vers le haut et devient opaque */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* LOGO ET CERCLE ANIMÉ */
         .logo-wrapper {
             position: relative;
             width: 150px;
@@ -89,6 +102,7 @@
             margin: 0 auto 25px;
         }
 
+        /* Cercle qui pulse autour de l'image */
         .logo-ring {
             position: absolute;
             inset: -8px;
@@ -123,6 +137,7 @@
             letter-spacing: 2px;
         }
 
+        /* SECTION CONTRÔLES : Bouton Play et Volume */
         .controls {
             display: flex;
             flex-direction: column;
@@ -146,9 +161,7 @@
             box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
         }
 
-        .play-btn:active {
-            transform: scale(0.9);
-        }
+        .play-btn:active { transform: scale(0.9); }
 
         .volume-container {
             display: flex;
@@ -164,9 +177,10 @@
             flex: 1;
             accent-color: var(--primary);
             cursor: pointer;
-            height: 25px; /* Largeur de contact pour mobile */
+            height: 25px;
         }
 
+        /* VISUALISEUR : Les petites barres qui bougent pendant l'écoute */
         .visualizer {
             display: flex;
             justify-content: center;
@@ -183,6 +197,7 @@
             border-radius: 3px;
         }
 
+        /* Quand on ajoute la classe 'playing', les barres s'animent */
         .playing .bar {
             animation: bounce 1s ease-in-out infinite;
         }
@@ -192,6 +207,7 @@
             50% { height: 28px; }
         }
 
+        /* On décale l'animation de chaque barre pour un effet de vague */
         .bar:nth-child(2) { animation-delay: 0.15s; }
         .bar:nth-child(3) { animation-delay: 0.3s; }
         .bar:nth-child(4) { animation-delay: 0.45s; }
@@ -203,6 +219,7 @@
             100% { transform: scale(1); opacity: 0.3; }
         }
 
+        /* CITATION CORANIQUE */
         .quran-quote {
             margin-top: 30px;
             font-family: 'Amiri', serif;
@@ -230,6 +247,7 @@
             opacity: 0.6;
         }
 
+        /* MESSAGE D'ERREUR : S'affiche en bas en cas de souci */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -253,6 +271,7 @@
 <body>
 
     <div class="main-card">
+        <!-- Barre d'animation audio -->
         <div class="visualizer" id="visualizer">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -270,10 +289,12 @@
         <p class="subtitle">Radio du Saint Coran - KSA</p>
 
         <div class="controls">
+            <!-- Bouton Lecture / Pause -->
             <button class="play-btn" id="masterPlayBtn" aria-label="Écouter le direct">
                 <i class="fas fa-play" id="playIcon" style="margin-left: 5px;"></i>
             </button>
 
+            <!-- Curseur de Volume -->
             <div class="volume-container">
                 <i class="fas fa-volume-down" style="color: var(--text-dim); font-size: 0.8rem;"></i>
                 <input type="range" id="volumeCtrl" min="0" max="1" step="0.01" value="0.7" aria-label="Régler le volume">
@@ -284,23 +305,23 @@
         <div class="quran-quote" dir="rtl">
             "وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ"
             <span>
-                "Et quand le Coran est récité, écoutez-le attentivement et faites silence afin que vous obteniez la miséricorde."
+                Et quand le Coran est récité, écoutez-le attentivement et faites silence afin que vous obteniez la miséricorde.
             </span>
         </div>
 
-        <p class="footer-text">
-            Direct • Arabie Saoudite
-        </p>
+        <p class="footer-text">Direct • Arabie Saoudite</p>
     </div>
 
+    <!-- Fenêtre d'erreur cachée par défaut -->
     <div id="errorToast" class="toast">Connexion au flux impossible.</div>
 
+    <!-- L'ÉLÉMENT AUDIO : Le moteur qui diffuse le son -->
     <audio id="audioEngine" preload="none">
         <source src="https://stream.radiojar.com/4wqre23fytzuv" type="audio/mpeg">
     </audio>
 
     <script>
-        // 1. Génération dynamique du Manifeste PWA
+        // 1. MANIFESTE PWA : Permet d'installer le site comme une application mobile
         const manifest = {
             "name": "Radio Coran Arabie Saoudite",
             "short_name": "Radio Coran",
@@ -317,12 +338,15 @@
                 }
             ]
         };
+        // Conversion de l'objet ci-dessus en fichier JSON virtuel
         const stringManifest = JSON.stringify(manifest);
         const blob = new Blob([stringManifest], {type: 'application/json'});
         const manifestURL = URL.createObjectURL(blob);
         document.querySelector('#pwa-manifest').setAttribute('href', manifestURL);
 
-        // 2. Logique du lecteur audio
+        // 2. LOGIQUE JAVASCRIPT : Les "cerveau" de l'application
+        
+        // Sélection des éléments HTML par leur ID pour pouvoir les manipuler
         const audio = document.getElementById('audioEngine');
         const playBtn = document.getElementById('masterPlayBtn');
         const playIcon = document.getElementById('playIcon');
@@ -330,45 +354,53 @@
         const visualizer = document.getElementById('visualizer');
         const errorToast = document.getElementById('errorToast');
 
+        // Réglage initial du volume
         audio.volume = volumeCtrl.value;
 
+        // Événement quand on clique sur le bouton Play
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                // Pour les radios en direct, il est préférable de recharger pour éviter le décalage accumulé
+                // Si c'est arrêté, on lance. Pour le direct, audio.load() évite le décalage (lag)
                 if (audio.readyState === 0) audio.load(); 
                 
                 audio.play()
-                    .then(() => updateUI(true))
-                    .catch(() => showError("Appuyez à nouveau pour lancer l'écoute."));
+                    .then(() => updateUI(true)) // Succès : on change l'icône
+                    .catch(() => showError("Appuyez à nouveau pour lancer l'écoute.")); // Erreur : message
             } else {
+                // Si ça joue déjà, on met en pause
                 audio.pause();
                 updateUI(false);
             }
         });
 
-        volumeCtrl.addEventListener('input', (e) => audio.volume = e.target.value);
+        // Événement quand on change le curseur de volume
+        volumeCtrl.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
 
+        // FONCTION : Met à jour l'icône (Play/Pause) et l'animation des barres
         function updateUI(isPlaying) {
             playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
             playIcon.style.marginLeft = isPlaying ? '0' : '5px';
-            visualizer.classList.toggle('playing', isPlaying);
+            visualizer.classList.toggle('playing', isPlaying); // Ajoute/Enlève la classe CSS 'playing'
         }
 
+        // FONCTION : Affiche un petit message d'erreur temporaire
         function showError(msg) {
             errorToast.textContent = msg;
             errorToast.style.display = 'block';
-            setTimeout(() => errorToast.style.display = 'none', 5000);
+            setTimeout(() => errorToast.style.display = 'none', 5000); // Disparaît après 5 secondes
         }
 
+        // Écoute des erreurs venant du flux audio (ex: coupure internet)
         audio.addEventListener('error', () => {
             showError("Le flux est momentanément indisponible.");
             updateUI(false);
         });
 
-        // Gestion de la mise en veille mobile
+        // GESTION DU MOBILE : Relancer le flux si l'utilisateur revient sur la page après une mise en veille
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible' && !audio.paused) {
-                // Vérifier si le flux est toujours vivant après une longue pause
                 if (audio.buffered.length === 0) {
                     audio.load();
                     audio.play();
@@ -376,11 +408,10 @@
             }
         });
 
-        // 3. Enregistrement du Service Worker (Inline Simulation pour démo)
+        // Vérification si le navigateur supporte les PWA (Service Workers)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                // Dans un environnement réel, le service-worker.js serait un fichier séparé.
-                console.log("PWA prête à être installée via le navigateur.");
+                console.log("PWA prête à être installée.");
             });
         }
     </script>
