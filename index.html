@@ -7,14 +7,11 @@
     <title>Radio du Saint Coran - Arabie Saoudite</title>
     
     <link rel="manifest" href="manifest.json">
-    
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhwzbQZ3iHzbzjW6-akYWlYamGn1hbWq2_hidaZDTD3I4nIUjhNl4ah9F1T3akY1ZTdSD80KXCKSKCHnOsWHMgFl-VSezptKUZdx5FpVnqnqkduHz5sT97uSv8xCDoBUSMDHF0Xv2WddWVBd3WRSG_le65hCSwD_8TKntKRT7noD6vugTwaU3LuXC_msRTZ/s16000/3dK88qLo_400x400.jpg">
-
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Les styles restent identiques à la version précédente */
         :root {
             --primary: #c5a059;
             --primary-dark: #a38445;
@@ -41,7 +38,8 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg-color); background-image: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; position: relative; }
         body::after { content: ""; position: fixed; inset: 0; background: var(--overlay); z-index: 1; }
 
-        .theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 100; background: var(--glass); border: 1px solid var(--glass-border); color: var(--primary); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; font-size: 1.2rem; }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 100; background: var(--glass); border: 1px solid var(--glass-border); color: var(--primary); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; font-size: 1.2rem; transition: transform 0.2s; }
+        .theme-toggle:active { transform: scale(0.9); }
 
         .main-card { position: relative; z-index: 10; width: 100%; max-width: 420px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 35px; padding: 40px 25px; text-align: center; box-shadow: 0 25px 50px -12px var(--card-shadow); animation: fadeIn 1.2s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -62,48 +60,40 @@
 
         h1 { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--primary); }
         .subtitle { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
-       /* 1. État normal - On force le centrage parfait */
-.play-btn { 
-    width: 85px; 
-    height: 85px; 
-    border-radius: 50%; 
-    background: var(--primary); 
-    border: none; 
-    color: white; 
-    font-size: 2rem; 
-    cursor: pointer; 
-    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
-    transition: all 0.2s ease;
-    
-    /* Ces 3 lignes assurent que l'icône est au milieu comme dans une cible */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-}
 
-/* 2. Au survol */
-.play-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.05);
-}
+        /* --- STYLES DU BOUTON PLAY CORRIGÉS --- */
+        .play-btn { 
+            width: 85px; 
+            height: 85px; 
+            border-radius: 50%; 
+            background: var(--primary); 
+            border: none; 
+            color: white; 
+            font-size: 2rem; 
+            cursor: pointer; 
+            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .play-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        .play-btn:active {
+            transform: scale(0.95) translateY(4px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        #playIcon {
+            margin-left: 5px; /* Équilibre visuel pour le triangle Play */
+            transition: margin 0.2s;
+        }
+        .play-btn.playing-ui #playIcon {
+            margin-left: 0; /* Centrage parfait pour l'icône Pause */
+        }
+        /* -------------------------------------- */
 
-/* 3. Au clic (effet poussoir) */
-.play-btn:active {
-    /* On garde le scale et le mouvement sur le même axe */
-    transform: scale(0.95) translateY(4px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Correction spécifique pour l'icône Play */
-/* Parfois, l'icône "Play" semble décalée à gauche à cause de sa forme triangulaire */
-#playIcon {
-    margin-left: 5px; /* On la pousse un tout petit peu vers la droite pour l'équilibre optique */
-}
-
-/* Quand c'est l'icône "Pause" (deux barres), on enlève ce décalage */
-.playing #playIcon {
-    margin-left: 0;
-}
         .volume-container { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.1); padding: 12px 20px; border-radius: 100px; margin-top: 25px; }
         input[type="range"] { flex: 1; accent-color: var(--primary); }
         .quran-quote { margin-top: 30px; font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--primary); }
@@ -113,30 +103,26 @@
     </style>
 </head>
 <body>
-
     <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon" id="themeIcon"></i></button>
-
+    
     <div class="main-card">
         <div class="visualizer" id="visualizer">
             <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
         </div>
-
         <div class="logo-wrapper">
             <div class="logo-ring"></div>
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhwzbQZ3iHzbzjW6-akYWlYamGn1hbWq2_hidaZDTD3I4nIUjhNl4ah9F1T3akY1ZTdSD80KXCKSKCHnOsWHMgFl-VSezptKUZdx5FpVnqnqkduHz5sT97uSv8xCDoBUSMDHF0Xv2WddWVBd3WRSG_le65hCSwD_8TKntKRT7noD6vugTwaU3LuXC_msRTZ/s16000/3dK88qLo_400x400.jpg" alt="Logo" class="logo-img">
         </div>
-
         <h1 dir="rtl">إِذَاعَةُ القُرْآنِ الكَرِيم</h1>
         <p class="subtitle">Radio Coran - KSA</p>
-
+        
         <button class="play-btn" id="masterPlayBtn"><i class="fas fa-play" id="playIcon"></i></button>
-
+        
         <div class="volume-container">
             <i class="fas fa-volume-down" style="color: var(--text-dim)"></i>
             <input type="range" id="volumeCtrl" min="0" max="1" step="0.01" value="0.7">
             <i class="fas fa-volume-up" style="color: var(--text-dim)"></i>
         </div>
-
         <div class="quran-quote" dir="rtl">
             "وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ"
             <span dir="ltr">"Quand le Coran est récité, écoutez-le attentivement et observez le silence, afin que vous obteniez la miséricorde"</span>
@@ -148,7 +134,6 @@
     <audio id="audioEngine" preload="none"><source src="https://stream.radiojar.com/4wqre23fytzuv" type="audio/mpeg"></audio>
 
     <script>
-        // --- ENREGISTREMENT DU SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
@@ -164,13 +149,12 @@
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
 
-        // Thème
         if (localStorage.getItem('theme') === 'light') enableLightMode();
         themeToggle.addEventListener('click', () => document.body.classList.contains('light-mode') ? disableLightMode() : enableLightMode());
+        
         function enableLightMode() { document.body.classList.add('light-mode'); themeIcon.className = 'fas fa-sun'; localStorage.setItem('theme', 'light'); }
         function disableLightMode() { document.body.classList.remove('light-mode'); themeIcon.className = 'fas fa-moon'; localStorage.setItem('theme', 'dark'); }
 
-        // Audio
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 if (audio.readyState === 0) audio.load();
@@ -184,7 +168,10 @@
         function updateUI(isPlaying) {
             playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
             visualizer.classList.toggle('playing', isPlaying);
+            // On ajoute/enlève la classe pour le centrage de l'icône
+            playBtn.classList.toggle('playing-ui', isPlaying);
         }
+        
         document.getElementById('volumeCtrl').addEventListener('input', (e) => audio.volume = e.target.value);
     </script>
 </body>
