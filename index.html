@@ -64,10 +64,10 @@
         .subtitle { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
         .play-btn { width: 85px; height: 85px; border-radius: 50%; background: var(--primary); border: none; color: white; font-size: 2rem; cursor: pointer; box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); }
         /* L'effet que nous venons d'ajouter */
-        .play-btn:active {
-    transform: translateY(4px);
-    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.2);
-         }
+       .play-btn:active {
+    transform: scale(0.92); /* Réduit la taille à 92% */
+    filter: brightness(0.9); /* Assombrit un peu la couleur */
+}
         .volume-container { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.1); padding: 12px 20px; border-radius: 100px; margin-top: 25px; }
         input[type="range"] { flex: 1; accent-color: var(--primary); }
         .quran-quote { margin-top: 30px; font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--primary); }
