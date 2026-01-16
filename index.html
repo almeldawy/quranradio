@@ -62,9 +62,35 @@
 
         h1 { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--primary); }
         .subtitle { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
-        .play-btn { width: 85px; height: 85px; border-radius: 50%; background: var(--primary); border: none; color: white; font-size: 2rem; cursor: pointer; box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); }
-        /* L'effet que nous venons d'ajouter */
-       .play-btn:active {
+        /* 1. État normal (au repos) */
+.play-btn { 
+    width: 85px; 
+    height: 85px; 
+    border-radius: 50%; 
+    background: var(--primary); 
+    border: none; 
+    color: white; 
+    font-size: 2rem; 
+    cursor: pointer; 
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4); /* Ombre portée */
+    transition: all 0.2s ease; /* Animation fluide pour tous les changements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. État au survol (souris qui passe dessus) */
+.play-btn:hover {
+    background: var(--primary-dark); /* Devient un peu plus foncé */
+    transform: scale(1.05); /* Grossit très légèrement (5%) */
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.5); /* L'ombre grandit */
+}
+
+/* 3. État actif (quand on clique/pousse) */
+.play-btn:active {
+    transform: scale(0.95) translateY(4px); /* Se comprime et descend */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* L'ombre s'écrase */
+}
     transform: scale(0.92); /* Réduit la taille à 92% */
     filter: brightness(0.9); /* Assombrit un peu la couleur */
 }
