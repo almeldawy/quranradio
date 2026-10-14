@@ -8,12 +8,12 @@
   "theme_color": "#2193b0",
   "icons": [
     {
-      "src": "/holy-quran-radio-pwa/favicon.png", // <--- Chemin corrigé ici
+      "src": "/quranradio/favicon.png", // <--- Chemin corrigé ici
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/holy-quran-radio-pwa/favicon.png", // <--- Et ici
+      "src": "/quranradio/favicon.png", // <--- Et ici
       "sizes": "512x512",
       "type": "image/png"
     }
